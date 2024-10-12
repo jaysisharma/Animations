@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Velocity.js Animation Example</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Velocity.js Animation Example</h1>
+    <div class="box" id="box"></div>
+    <button id="animateButton">Animate Box</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.1/velocity.min.js"></script>
+    <script>
+        const box = document.getElementById('box');
+        const button = document.getElementById('animateButton');
+
+        button.addEventListener('click', () => {
+            Velocity(box, { 
+                translateX: "250px", 
+                rotateZ: "360deg", 
+                backgroundColor: "#e74c3c"
+            }, { 
+                duration: 1000,
+                easing: "ease-in-out",
+                complete: function() {
+                    Velocity(box, { 
+                        translateX: "0px", 
+                        backgroundColor: "#3498db"
+                    }, { 
+                        duration: 1000,
+                        easing: "ease-in-out"
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

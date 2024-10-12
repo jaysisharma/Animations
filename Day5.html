@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complex Anime.js Animations</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .ball {
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .morph {
+            width: 100px;
+            height: 100px;
+            background-color: #e74c3c;
+            position: relative;
+            margin-bottom: 40px;
+            border-radius: 20%;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 8px solid #2ecc71;
+            border-top: 8px solid transparent;
+            border-radius: 50%;
+            margin-bottom: 40px;
+        }
+        .color-box {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Complex Anime.js Animations</h1>
+
+    <div class="ball" id="ball"></div>
+    <div class="morph" id="morph"></div>
+    <div class="spinner" id="spinner"></div>
+    <div class="color-box" id="colorBox"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Bouncing Ball Animation
+        anime({
+            targets: '#ball',
+            translateY: [
+                { value: 300, duration: 800, easing: 'easeOutBounce' },
+                { value: 0, duration: 800, easing: 'easeOutBounce' }
+            ],
+            loop: true
+        });
+
+        // Morphing Shape Animation
+        anime({
+            targets: '#morph',
+            keyframes: [
+                { borderRadius: '20%' },
+                { borderRadius: '50%' },
+                { borderRadius: '0%' },
+                { borderRadius: '20%' }
+            ],
+            duration: 2000,
+            easing: 'easeInOutQuad',
+            loop: true
+        });
+
+        // Loading Spinner Animation
+        anime({
+            targets: '#spinner',
+            rotate: '1turn',
+            duration: 1500,
+            easing: 'linear',
+            loop: true
+        });
+
+        // Color Change Sequence Animation
+        anime({
+            targets: '#colorBox',
+            backgroundColor: [
+                { value: '#e74c3c', duration: 1000 },
+                { value: '#f39c12', duration: 1000 },
+                { value: '#2ecc71', duration: 1000 },
+                { value: '#3498db', duration: 1000 },
+            ],
+            easing: 'linear',
+            loop: true
+        });
+    </script>
+</body>
+</html>
