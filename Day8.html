@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore smooth scrolling and interactive animations powered by GSAP and Lenis.">
+    <title>Interactive Web Design</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #1e1e1e;
+            color: #f0f0f0;
+            overflow: hidden; /* Prevent native scrolling */
+            height: 200vh; /* Enough height for smooth scrolling */
+        }
+        
+        .content {
+            position: relative;
+            width: 100%;
+            height: 400vh;
+            padding: 20px;
+        }
+
+        /* Section styles */
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 48px;
+            color: #ff98a2;
+            padding: 20px;
+            transition: background-color 0.5s ease;
+        }
+
+        .section:nth-child(odd) {
+            background: rgba(255, 152, 162, 0.3);
+        }
+
+        .section:nth-child(even) {
+            background: rgba(44, 85, 255, 0.3);
+        }
+
+        /* Layout Styles */
+        .container {
+            width: 100vw;
+            display: flex;
+            height: 100vh;
+        }
+
+        .container .left {
+            width: 40%;
+            /* background-color: #333; */
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            font-size: 24px;
+            color: #fff;
+            padding: 20px;
+            border-right: 2px solid #fff;
+            height: 100vh;
+        }
+
+        .container .right {
+            width: 60%;
+            height: 400vh; /* Enough height for smooth scrolling */
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .container .left,
+            .container .right {
+                width: 100%;
+                height: auto;
+            }
+
+            .section {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="left">
+            <div>
+                <h1>Interactive Design</h1>
+                <p>Explore smooth scrolling animations with GSAP & Lenis</p>
+            </div>
+        </div>
+
+        <!-- Right Scrollable Content -->
+        <div class="right">
+            <div class="content">
+                <!-- Section 1 -->
+                <div class="section" id="section-1">
+                    <div>
+                        <h2>Welcome</h2>
+                        <p>Explore an immersive experience with smooth scrolling and animations that elevate web interactions.</p>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="section" id="section-2">
+                    <div>
+                        <h2>GSAP: Powerful Animations</h2>
+                        <p>GSAP (GreenSock Animation Platform) is the industry-leading tool for high-performance animations in the web environment.</p>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div class="section" id="section-3">
+                    <div>
+                        <h2>Lenis: Smooth Scrolling</h2>
+                        <p>Lenis provides a smooth and seamless scrolling experience that enhances the interaction flow of the website.</p>
+                    </div>
+                </div>
+
+                <!-- Section 4 -->
+                <div class="section" id="section-4">
+                    <div>
+                        <h2>Get in Touch</h2>
+                        <p>Want to learn more or collaborate? Reach out to us and let's build something amazing together!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+
+    <!-- Include Lenis for smooth scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@latest/bundled/lenis.js"></script>
+
+    <script>
+        // Initialize Lenis for smooth scrolling
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+        });
+
+        // Function to update Lenis on each frame
+        function raf(time) {
+            lenis.raf(time);
+            ScrollTrigger.update();
+            requestAnimationFrame(raf);
+        }
+
+        // Start the animation frame loop
+        requestAnimationFrame(raf);
+
+        // GSAP timeline for animation
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".right",           // Trigger the animation when scrolling in the right section
+                start: "top top",            // Start the animation when the top of the trigger hits the top of the viewport
+                end: "bottom center",        // End when the bottom of the trigger hits the center of the viewport
+                scrub: true,                 // Smooth scrub effect
+                markers: false,              // Remove markers for a cleaner look
+            }
+        });
+
+        // Move the .left div based on scroll, synchronized with ScrollTrigger
+        tl.fromTo(".left", 
+            { y: 0 }, 
+            { y: "400vh", ease: "none" }, 0); // Move the left div up as you scroll through the right section
+    </script>
+
+</body>
+</html>
