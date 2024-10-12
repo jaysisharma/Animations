@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Lottie Animation</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <script type="module">
+      import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+
+      const canvas = document.getElementById("canvas");
+
+      // Create a new DotLottie instance
+      const dotLottie = new DotLottie({
+        autoplay: true,
+        loop: true,
+        canvas: canvas,
+        src: "./Untitled_file.json", // Ensure this file path is correct
+      });
+
+      // Handle loading errors
+      dotLottie.on("error", (error) => {
+        console.error("Error loading Lottie animation:", error);
+      });
+    </script>
+  </body>
+</html>
