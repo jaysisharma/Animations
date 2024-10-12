@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letter-by-Letter Animation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --black: black;
+        --white: white;
+        --grey: #535353;
+        --blue: #3055ff;
+        --yellow: #ffb701;
+        --green: #24ce49;
+        --red: #fd4239;
+      }
+      body {
+        background-color: #f0f0f0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      .letter {
+        display: inline-block;
+        opacity: 0; /* Start hidden */
+        transform: translateY(20px); /* Start slightly below */
+      }
+
+      .hero {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+        overflow: hidden; /* Hide overflow */
+        background-color: #000;
+        position: relative;
+      }
+
+      .black h1 {
+        color: white;
+        font-size: 4rem;
+        position: relative;
+        z-index: 2; /* Bring text above the circle */
+      }
+
+      .circle {
+        width: 250px; /* Start at 0 width */
+        height: 250px; /* Start at 0 height */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background-color: transparent;
+        /* border: 1px solid white; */
+        z-index: 1; /* Place circle behind text */
+        opacity: 0; /* Start hidden */
+      }
+
+      video {
+        width: 100%; /* Responsive video */
+        height: 100%; /* Fill the circle */
+        border-radius: 50%; /* Round video to match circle */
+        object-fit: cover; /* Cover the area */
+      }
+      nav {
+        position: absolute;
+        top: 20px;
+        left: 80px;
+        padding: 4px;
+        z-index: 99;
+        display: flex;
+        justify-content: space-between;
+        width: 85vw;
+      }
+      nav ul {
+        border-radius: 8px;
+        background-color: gray;
+        list-style: none;
+        display: flex;
+        gap: 7px;
+        padding: 8px;
+      }
+      nav ul li img {
+        width: 130px;
+      }
+      nav ul li {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        /* margin-right: 7px; */
+        padding: 20px;
+        border-radius: 4px;
+      }
+      .btn {
+        background-color: var(--yellow);
+        border: none;
+        padding: 18px;
+        border-radius: 4px;
+        font-size: 20px;
+        transform: translateY(0);
+        box-shadow: 0 4px 8px rgba(179, 143, 54, 0.3);
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .btn:hover {
+        /* background-color: darken(var(--yellow), 10%); Adjust this according to your needs */
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(179, 143, 54, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 19px 48px rgba(179, 143, 54, 0.3);
+      }
+      .svg {
+        width: 30px;
+        margin-left: 10px;
+      }
+      #portfolio_section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        position: absolute;
+        top: 0%;
+        color: #ffb701;
+        z-index: 9;
+        height: 96vh;
+        width: 97.9vw;
+        background-color: rgba(
+          38,
+          38,
+          38,
+          0.8
+        ); /* Semi-transparent gray background */
+        backdrop-filter: blur(1px); /* Apply blur effect to the background */
+        padding: 20px; /* Add padding for better spacing */
+        overflow: hidden;
+        display: none;
+      }
+      .content_wrapper {
+        position: relative;
+        top: 120px;
+        left: 15%;
+        font-size: 40px;
+        color: #535353;
+        opacity: 1;
+      }
+
+      .content_wrapper h2:hover {
+        color: #fff;
+        cursor: pointer;
+        opacity: 0.5;
+        animation: fade-in 0.5s ease-in-out forwards; /* Smooth fade-in */
+      }
+      @keyframes fade-in {
+        100% {
+          opacity: 1;
+        }
+      }
+      .text_wrapper {
+        z-index: 999;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        color: var(--white);
+      }
+      .text_wrapper h2 {
+        width: 400px;
+        font-size: 30px;
+        text-align: end;
+      }
+      .text_wrapper h2:nth-child(1) {
+        text-align: start;
+      }
+      .right {
+        z-index: 999;
+        position: absolute;
+        top: 35%;
+        right: 30%;
+        color: var(--white);
+        display: flex;
+        gap: 20px;
+      }
+      .circle_full {
+        position: relative;
+      }
+      .circle_full::before {
+        content: "";
+        height: 20px;
+        width: 20px;
+        position: absolute; /* Position it absolutely within the parent */
+        left: -20%; /* Center horizontally */
+        top: 50%; /* Center vertically */
+        background-color: #fff;
+        border-radius: 50%;
+        display: flex; /* Use flexbox to center text */
+        align-items: start; /* Vertically center the text */
+        justify-content: start; /* Horizontally center the text */
+        transform: translate(-50%, -50%); /* Adjust for centering */
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="hero">
+        <div class="black">
+          <h1 id="text"></h1>
+        </div>
+        <div class="circle">
+          <video
+            class="video"
+            src="./Matomo-Googleheimer.mp4"
+            autoplay
+            loop
+            muted
+          ></video>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <img
+                src="https://cdn.prod.website-files.com/65c4b4da44785bd5a7210c55/662618fb643f14223846f928_Logo.svg"
+                alt=""
+              />
+            </li>
+            <li id="portfolio">
+              Portfolio
+              <img class="svg" src="./category.svg" alt="Category Icon" />
+            </li>
+            <li>About</li>
+            <li>Insights</li>
+          </ul>
+          <div class="btn_wrapper">
+            <button class="btn">Let's do this</button>
+          </div>
+        </nav>
+        <div class="container">
+          <div class="text_wrapper">
+            <h2>BOLD CREATIVE</h2>
+            <h2>THAT SHATTERS</h2>
+            <h2>MARKETING FORMULAS</h2>
+          </div>
+          <div class="right">
+            <div class="circle_full">
+              <h2>Client Work</h2>
+            </div>
+            <h2>Umault Ads</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="portfolio_section">
+      <div class="content_wrapper">
+        <h2>- CLIENT WORK</h2>
+        <h2>- UMAULT'S WORK</h2>
+      </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+
+    <script>
+      const text = "UMAULT IS BOUTIQUE THAT CREATES B2B VIDEO ADS";
+      const textElement = document.getElementById("text");
+
+      // Split the text into individual letters and wrap each in a span
+      text.split("").forEach((letter) => {
+        const span = document.createElement("span");
+        span.classList.add("letter");
+        span.textContent = letter === " " ? "\u00A0" : letter; // Use non-breaking space for spaces
+        textElement.appendChild(span);
+      });
+
+      // Animate each letter
+      anime({
+        targets: ".letter",
+        translateY: 0, // Move to original position
+        opacity: 1, // Fade in to full opacity
+        duration: 400, // Animation duration for each letter
+        easing: "easeOutQuart", // Easing function for a smoother effect
+        delay: anime.stagger(30), // Delay between each letter's animation
+        complete: () => {
+          // Hide the text after 2 seconds
+          setTimeout(() => {
+            gsap.to(textElement, {
+              opacity: 0,
+              duration: 1, // Fade out duration for text
+              onComplete: () => {
+                // Fade in the circle
+                gsap.to(".circle", {
+                  opacity: 1, // Fade in
+                  duration: 1, // Duration for fade in
+                  onComplete: () => {
+                    // Start expanding the circle
+                    gsap.to(".circle", {
+                      width: window.innerWidth, // Expand to full viewport width
+                      height: window.innerHeight, // Expand to full viewport height
+                      borderRadius: 0,
+                      duration: 3, // Duration for expansion
+                      ease: "power1.inOut", // Easing function
+                    });
+                  },
+                });
+                gsap.to(".video", {
+                  delay: 1,
+                  borderRadius: 0,
+                });
+              },
+            });
+          }, 2000);
+        },
+      });
+
+      const portfolio = document.getElementById("portfolio");
+      const portfolio_section = document.getElementById("portfolio_section");
+
+      portfolio.addEventListener("click", () => {
+        // Toggle the visibility of the portfolio section
+        if (portfolio_section.style.display === "block") {
+          portfolio_section.style.display = "none"; // Hide it
+        } else {
+          portfolio_section.style.display = "block"; // Show it
+        }
+      });
+    </script>
+  </body>
+</html>
