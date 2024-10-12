@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typed.js Example</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        #typed-text {
+            color: #ff98a2;
+            font-weight: bold;
+        }
+
+        .typed-cursor {
+            font-size: 36px;
+            color: #ff98a2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to <span id="typed-text"></span></h1>
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        var typed = new Typed("#typed-text", {
+            strings: ["an immersive experience", "a smooth journey", "interactive web design"],
+            typeSpeed: 50,
+            backSpeed: 25,
+            loop: true,
+            smartBackspace: true,
+            showCursor: true,
+            cursorChar: "|",
+            startDelay: 500,
+            backDelay: 1000
+        });
+    </script>
+</body>
+</html>
