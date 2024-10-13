@@ -71,7 +71,7 @@
         top: 20px;
         left: 80px;
         padding: 4px;
-        z-index: 99;
+        z-index: 1000;
         display: flex;
         justify-content: space-between;
         width: 85vw;
@@ -130,7 +130,7 @@
         position: absolute;
         top: 0%;
         color: #ffb701;
-        z-index: 9;
+        z-index: 999;
         height: 96vh;
         width: 97.9vw;
         background-color: rgba(
@@ -139,7 +139,7 @@
           38,
           0.8
         ); /* Semi-transparent gray background */
-        backdrop-filter: blur(1px); /* Apply blur effect to the background */
+        backdrop-filter: blur(10px); /* Apply blur effect to the background */
         padding: 20px; /* Add padding for better spacing */
         overflow: hidden;
         display: none;
@@ -165,7 +165,7 @@
         }
       }
       .text_wrapper {
-        z-index: 999;
+        z-index: 99;
         position: absolute;
         top: 20%;
         left: 20%;
@@ -204,6 +204,26 @@
         align-items: start; /* Vertically center the text */
         justify-content: start; /* Horizontally center the text */
         transform: translate(-50%, -50%); /* Adjust for centering */
+      }
+      .client{
+        position: absolute;
+        color: #fff;
+        bottom: 0;
+        right: 34%;
+        height: 200px;
+        width: 200px;
+      }
+      .item1{
+        font-size: 30px;
+      }
+      .progress{
+        height: 4px;
+        width: 100%;
+        background-color: gray;
+      }
+      .progress_bar{
+        height: 4px;
+        background-color: #f0f0f0;
       }
     </style>
   </head>
@@ -253,6 +273,14 @@
             </div>
             <h2>Umault Ads</h2>
           </div>
+          <div class="client">
+            <div class="item1">
+              <h1>Matamo</h1>
+              <div class="progress">
+                <div class="progress_bar"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -261,6 +289,7 @@
         <h2>- CLIENT WORK</h2>
         <h2>- UMAULT'S WORK</h2>
       </div>
+      
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -329,6 +358,8 @@
           portfolio_section.style.display = "block"; // Show it
         }
       });
+
+      gsap.fromTo(".progress_bar",{width: "0%"},{width: "100%", duration: 30, repeat: -1});
     </script>
   </body>
 </html>
